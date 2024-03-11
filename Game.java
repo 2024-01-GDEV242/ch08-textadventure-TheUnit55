@@ -73,7 +73,7 @@ public class Game
         currentRoom = home;  // start game at home
     }
 
-    /**
+     /**
      *  Main play routine.  Loops until end of play.
      */
     public void play() 
@@ -131,6 +131,11 @@ public class Game
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
+            case LOOK:
+                look();
+                break;
+                
         }
         return wantToQuit;
     }
@@ -191,5 +196,10 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+    
+    private void look()
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 }
