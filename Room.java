@@ -19,8 +19,9 @@ import java.util.Iterator;
 public class Room 
 {
     private String description;
-    private HashMap<String, Room> exits;        // stores exits of this room.
-
+    private HashMap<String, Room> exits;// stores exits of this room.
+    private Item item;
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -53,14 +54,22 @@ public class Room
     }
 
     /**
-     * Return a description of the room in the form:
-     *     You are in the kitchen.
-     *     Exits: north west
-     * @return A long description of this room
+     * Returns a detailed description of this room, including its exits and 
+     * any item present. The description consists of the room's basic 
+     * description, followed by a list of exits. If an item is present in the 
+     * room, its description is included as well.
+     * 
+     * @return A String containing the long description of the room, including
+     * exits and item description if an item is present.
      */
-    public String getLongDescription()
-    {
-        return "You are " + description + ".\n" + getExitString();
+    public String getLongDescription() {
+        String descriptionText = "You are " + description + ".\n" + getExitString();
+    
+        if (item != null) {
+            descriptionText += "\nYou see " + item.toString();
+        }
+    
+        return descriptionText;
     }
 
     /**
@@ -88,5 +97,21 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    /**
+     * Sets the item contained in the room.
+     * @param item The item to be placed in the room.
+     */
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    /**
+     * @return The item contained in the room.
+     */
+    public Item getItem() {
+        return item;
+    }
+
 }
 

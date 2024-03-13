@@ -19,7 +19,15 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+    
+    /**
+     * main method so it can be run outside of Blue J 
+     */
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.play();
+    }
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -38,7 +46,11 @@ public class Game
       
         // create the rooms
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
+        
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey");
+        Item dragonBall = new Item("a 4 star dragon ball", 1);
+        grampsHome.setItem(dragonBall);
+        
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
         oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
         sCity = new Room("At the great Satan City");
@@ -50,12 +62,12 @@ public class Game
         home.setExit("north", oMansion);
         home.setExit("southeast", grampsHome);
         home.setExit("southwest", hideout);
-        //home.setExits(oMansion, grampsHome, null, hideout);
+        
         grampsHome.setExit("northwest",home );
-        //grampsHome.setExits(null, null, null, home);
+        
         hideout.setExit("northeast", home);
         hideout.setExit("west", fPMountain);
-        //hideout.setExits(null, home, null, null);
+        
         fPMountain.setExit("east" , hideout);
         fPMountain.setExit("northwest" , rMPath);
         
@@ -66,9 +78,9 @@ public class Game
         
         oMansion.setExit("east",sCity );
         oMansion.setExit("south",home );
-        //oMansion.setExits(null, sCity, home, null);
+        
         sCity.setExit("west", oMansion);
-        //sCity.setExits(null, null, null, oMansion);
+        
 
         currentRoom = home;  // start game at home
     }
