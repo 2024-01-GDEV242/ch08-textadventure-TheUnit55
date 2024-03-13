@@ -136,6 +136,11 @@ public class Game
                 look();
                 break;
                 
+            case EAT:
+                eat();
+                break;
+            
+                
         }
         return wantToQuit;
     }
@@ -198,8 +203,26 @@ public class Game
         }
     }
     
+    /**
+     * Prints the long description of the current room.
+     * This method is intended to be used to give the player a detailed
+     * description of their current location within the game.
+     * It retrieves the long description from the currentRoom object
+     * and prints it.
+     */
     private void look()
     {
         System.out.println(currentRoom.getLongDescription());
+    }
+    
+    /**
+     * Simulates eating action within the game.
+     * When this method is called, it prints a message. indicating that the 
+     * player has eaten and is no longer hungry.
+     * This method is used for game mechanics related to hunger or health.
+     */
+    private void eat()
+    {
+        System.out.println("You have eaten and are not hungry anymore");
     }
 }
