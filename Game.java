@@ -48,8 +48,8 @@ public class Game
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
         
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey");
-        Item dragonBall = new Item("a 4 star dragon ball", 1);
-        grampsHome.setItem(dragonBall);
+        grampsHome.addItem(new Item("4 star Dragon ball", 2));
+        grampsHome.addItem(new Item("Power Pole", 10));
         
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
         oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
@@ -156,8 +156,6 @@ public class Game
         }
         return wantToQuit;
     }
-
-    // implementations of user commands:
 
     /**
      * Print out some help information.

@@ -1,6 +1,8 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class Room - a room in an adventure game.
@@ -20,7 +22,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;// stores exits of this room.
-    private Item item;
+    private List<Item> items;
     
     /**
      * Create a room described "description". Initially, it has
@@ -31,7 +33,8 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        exits = new HashMap<>();
+        this.items = new ArrayList<>();
+        this.exits = new HashMap<>();
     }
 
     /**
@@ -46,32 +49,36 @@ public class Room
 
     /**
      * @return The short description of the room
-     * (the one that was defined in the constructor).
      */
     public String getShortDescription()
     {
         return description;
     }
 
-    /**
-     * Returns a detailed description of this room, including its exits and 
-     * any item present. The description consists of the room's basic 
-     * description, followed by a list of exits. If an item is present in the 
-     * room, its description is included as well.
-     * 
-     * @return A String containing the long description of the room, including
-     * exits and item description if an item is present.
+     /**
+     * Return a long description of the room, including exits and items present.
+     * @return A description of the room, its exits, and any items it has.
      */
     public String getLongDescription() {
-        String descriptionText = "You are " + description + ".\n" + getExitString();
-    
-        if (item != null) {
-            descriptionText += "\nYou see " + item.toString();
-        }
-    
-        return descriptionText;
+        return "You are " + description + ".\n" + getExitString() + 
+        getItemDescriptions();
     }
 
+    /**
+     * Return a string listing the items in the room, if there is any.
+     * @return A description of the items present in the room.
+     */
+    private String getItemDescriptions() {
+        if (items.isEmpty()) {
+            return "";
+        }
+        String returnString = "\nItems in the room:";
+        for (Item item : items) {
+              returnString += " " + item.toString();
+        }
+        return returnString;
+    }
+    
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
@@ -99,19 +106,21 @@ public class Room
     }
     
     /**
-     * Sets the item contained in the room.
-     * @param item The item to be placed in the room.
+     * Add an item to the room.
+     * @param item The item to add to the room.
      */
-    public void setItem(Item item) {
-        this.item = item;
+    public void addItem(Item item) {
+        items.add(item);
     }
 
     /**
-     * @return The item contained in the room.
+     * Remove an item from the room.
+     * @param item The item to be removed.
+     * @return true if the room had the specified item and it was removed, 
+     * false otherwise.
      */
-    public Item getItem() {
-        return item;
+    public boolean removeItem(Item item) {
+        return items.remove(item);
     }
-
 }
 
