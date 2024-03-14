@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,6 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Stack<Room> roomHistory = new Stack<>();
     
     /**
      * main method so it can be run outside of Blue J 
@@ -151,6 +153,10 @@ public class Game
             case EAT:
                 eat();
                 break;
+                
+            case BACK:
+                back();
+                break;
             
                 
         }
@@ -192,11 +198,12 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            roomHistory.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
     }
-
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
@@ -234,5 +241,26 @@ public class Game
     private void eat()
     {
         System.out.println("You have eaten and are not hungry anymore");
+    }
+    
+    /**
+     * Takes the player back to the previous room.
+     * This method allows the player to navigate back to the last room they 
+     * were in, It relies on a stack called roomHistory that tracks the player's
+     * movement history through the game. When invoked, it checks if the room 
+     * history is not empty, indicating that the player has previously moved 
+     * from another room. If so, it updates the currentRoom to the most recent
+     * room stored in the history and removes that entry from the history.
+     * The long description of the current room is then displayed. If the 
+     * player is in the starting room a message is then displayed that they 
+     * cannot go back further.
+     */
+    private void back() {
+        if (!roomHistory.isEmpty()) {
+            currentRoom = roomHistory.pop();
+            System.out.println(currentRoom.getLongDescription());
+        } else {
+            System.out.println("You are home, you cant go back");
+        }
     }
 }
