@@ -51,8 +51,8 @@ public class Game
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
         
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey");
-        grampsHome.addItem(new Item("4 star Dragon ball", 2));
-        grampsHome.addItem(new Item("Power Pole", 10));
+        grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
+        grampsHome.addItem(new Item("PowerPole", "extending staff", 10));
         
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
         oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
@@ -118,6 +118,7 @@ public class Game
         System.out.println();
         System.out.println("Get ready " + player.getName() + " for your great"
          + " adventure finding the dragonBalls");
+        System.out.print(player.getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -159,7 +160,12 @@ public class Game
             case BACK:
                 back();
                 break;
-            
+            case TAKE:
+                takeItem(command);
+                break;
+            case DROP:
+                dropItem(command);
+                break;
                 
         }
         return wantToQuit;
@@ -231,6 +237,7 @@ public class Game
     private void look()
     {
         System.out.println(player.getCurrentRoom().getLongDescription());
+        System.out.println(player.getInventoryString());
     }
     
     /**
@@ -262,6 +269,46 @@ public class Game
             System.out.println(player.getCurrentRoom().getLongDescription());
         } else {
             System.out.println("You are home, you cant go back");
+        }
+    }
+    
+    private void takeItem(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Take what?");
+            return;
+        }
+        String itemName = command.getSecondWord();
+        Item itemToTake = player.getCurrentRoom().getItem(itemName);
+
+        if (itemToTake == null) {
+            System.out.println("That's not here");
+        } else {
+            player.getCurrentRoom().removeItem(itemToTake);
+            player.addItem(itemToTake);
+            System.out.println("Taken.");
+        }
+    }
+    
+    private void dropItem(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Drop what?");
+            return;
+        }
+        String itemName = command.getSecondWord();
+        Item itemToDrop = null;
+        for (Item item : player.getInventory()) {
+            if (item.getName().equals(itemName)) {
+                itemToDrop = item;
+                break;
+            }
+        }
+
+        if (itemToDrop == null) {
+            System.out.println("You currently dont have that");
+        } else {
+            player.removeItem(itemToDrop);
+            player.getCurrentRoom().addItem(itemToDrop);
+            System.out.println("Dropped.");
         }
     }
 }

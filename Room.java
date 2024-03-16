@@ -122,5 +122,20 @@ public class Room
     public boolean removeItem(Item item) {
         return items.remove(item);
     }
+    
+     /**
+     * Retrieves an item by its name from the room.
+     * @param itemName The name of the item to retrieve.
+     * @return The item with the specified name, or null if the item doesn't
+     * exist in the room.
+     */
+    public Item getItem(String itemName) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return item;
+        }
+        }
+        return null;
+    }
 }
 

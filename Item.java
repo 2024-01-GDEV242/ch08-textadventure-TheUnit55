@@ -17,15 +17,17 @@
 public class Item {
     private String description;
     private int weight;
+    private String name;
 
     /**
      * Constructor for objects of class Item
      * @param description The item's description
      * @param weight The item's weight
      */
-    public Item(String description, int weight) {
+    public Item(String name, String description, int weight) {
         this.description = description;
         this.weight = weight;
+        this.name = name;
     }
 
     /**
@@ -47,7 +49,11 @@ public class Item {
      * and weight
      */
     public String toString() {
-        return description + " (Weight: " + weight + "lb)";
+        return name + ": " + description + " (Weight: " + weight + ")";
+    }
+    
+    public String getName() {
+        return name;
     }
 }
 
