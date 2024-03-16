@@ -19,7 +19,7 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
     private Stack<Room> roomHistory = new Stack<>();
     
     /**
@@ -35,8 +35,9 @@ public class Game
      */
     public Game() 
     {
-        createRooms();
         parser = new Parser();
+        player = new Player("Z-Fighter");
+        createRooms();
     }
 
     /**
@@ -84,7 +85,7 @@ public class Game
         sCity.setExit("west", oMansion);
         
 
-        currentRoom = home;  // start game at home
+        player.setCurrentRoom(home);  // start game at home
     }
 
      /**
@@ -115,7 +116,8 @@ public class Game
         System.out.println("Dragon ball is a new, incredible adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println("Get ready " + player.getName() + " for your great"
+         + " adventure finding the dragonBalls");
     }
 
     /**
@@ -191,16 +193,15 @@ public class Game
 
         String direction = command.getSecondWord();
 
-        // Try to leave current room.
+        Room currentRoom = player.getCurrentRoom();
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else {
-            roomHistory.push(currentRoom);
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+        } else {
+            roomHistory.push(currentRoom); 
+            player.setCurrentRoom(nextRoom); 
+            System.out.println(player.getCurrentRoom().getLongDescription());
         }
     }
     
@@ -229,7 +230,7 @@ public class Game
      */
     private void look()
     {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getCurrentRoom().getLongDescription());
     }
     
     /**
@@ -257,8 +258,8 @@ public class Game
      */
     private void back() {
         if (!roomHistory.isEmpty()) {
-            currentRoom = roomHistory.pop();
-            System.out.println(currentRoom.getLongDescription());
+            player.setCurrentRoom(roomHistory.pop());
+            System.out.println(player.getCurrentRoom().getLongDescription());
         } else {
             System.out.println("You are home, you cant go back");
         }
