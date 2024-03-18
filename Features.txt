@@ -1,6 +1,20 @@
 Implements for A-
 
+    -Locked doors and keys
+    
+    -eat actually changes game state
 
+    -rudimentary health system
 
 
 Implements for extra credit--
+
+    -allow player to take item
+    -allow player to drop item
+    
+    -implement a collection of items to have multiple items
+    -add inventory to room so room can hold multiple items
+    
+    -Add weight to items so player can only carry specified weight
+    
+    -implement a fighting system and obtain items after defeating

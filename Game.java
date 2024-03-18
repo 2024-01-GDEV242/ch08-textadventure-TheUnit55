@@ -45,23 +45,65 @@ public class Game
      */
     private void createRooms()
     {
-        Room home, grampsHome, hideout, oMansion, sCity, fPMountain, rMPath, pCastle;
+        Room home, grampsHome, hideout, oMansion, sCity, fPMountain, rMPath, pCastle,
+        parCity, westCity, timeMachine, frzLandingShip, gingerTown, centralCity, cellGames,
+        majinBuuHome, korinTower, lookout, redRHeadquater, giranVillage, fortuneBaba,
+        babidiSpaceship, namVillage; //SouthCity, papaya island, training island, KameHouse,
+        //kingKaiPnt
+        
         Item senzuBean = new Item("SenzuBean", "a special bean that restores energy and increases strength", 1);
         
         // create the rooms
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
         
+        //going east from home
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey");
         grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
         grampsHome.addItem(new Item("PowerPole", "extending staff", 10));
         
+        //going west from home
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
-        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
-        sCity = new Room("At the great Satan City");
+        
         fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way");
+        
         rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through");
+        
         pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape");
         pCastle.addItem(senzuBean);
+        
+        parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans");
+        
+        westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located");
+        
+        timeMachine = new Room("Trunk's time machine where he crosses timelines");
+        
+        frzLandingShip = new Room("where freiza landed when he came to earth to wreck havoc");
+        
+        gingerTown = new Room("A suburb of West city where cell first absorbed the population");
+        
+        majinBuuHome = new Room("where majin buu lived with Hercule and their pet dog");
+        
+        korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives");
+        
+        lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is");
+        
+        redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army");
+        
+        giranVillage = new Room("where Giran and the rest of the giras live in the village");
+        
+        fortuneBaba = new Room("where baba the witch lives in her palace with her five warriors");
+        
+        babidiSpaceship = new Room("created by babadi via magic which held majin buu");
+        
+        namVillage = new Room("where nam live's in a naturally barren region with very low annual rainfall, the environment\n is very harsh");
+        
+        centralCity = new Room("Largest city with location of King's castle, where \n where King Furry main residence is");
+        
+        cellGames = new Room("Where cell once gave the earth's greatest fighters 10 days \n to train and prepare to save their world");
+        //going north from home
+        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
+        
+        sCity = new Room("At the great Satan City");
         
         // initialise room exits
         home.setExit("north", oMansion);
@@ -80,11 +122,45 @@ public class Game
         rMPath.setExit("northeast", pCastle);
         
         pCastle.setExit("southwest", rMPath);
+        pCastle.setExit("west", parCity);
+        
+        parCity.setExit("east", pCastle);
+        parCity.setExit("north", westCity);
+        
+        westCity.setExit("south", parCity);
+        westCity.setExit("east", timeMachine);
+        westCity.setExit("north", frzLandingShip);
+        westCity.setExit("northwest", gingerTown);
+        
+        timeMachine.setExit("west", westCity);
+        timeMachine.setExit("east", centralCity);
+        timeMachine.setExit("north", cellGames);
+        
+        centralCity.setExit("west", timeMachine);
+        
+        cellGames.setExit("south", timeMachine);
+        cellGames.setExit("west", frzLandingShip);
+        
+        frzLandingShip.setExit("south", westCity);
+        frzLandingShip.setExit("east", cellGames);
+        
+        gingerTown.setExit("southeast", westCity);
+        gingerTown.setExit("west", majinBuuHome);
+        
+        majinBuuHome.setExit("east", gingerTown);
+        majinBuuHome.setExit("southwest", korinTower);
+        
+        korinTower.setExit("northeast", majinBuuHome);
+        korinTower.setExit("up", lookout);
+        
+        lookout.setExit("down", korinTower);
         
         oMansion.setExit("east",sCity );
         oMansion.setExit("south",home );
         
         sCity.setExit("west", oMansion);
+    
+        
         
 
         player.setCurrentRoom(home);  // start game at home
