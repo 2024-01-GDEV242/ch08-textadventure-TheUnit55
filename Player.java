@@ -10,10 +10,14 @@ public class Player
     private String name;
     private Room currentRoom;
     private List<Item> inventory;
+    private int maxWeight;
+    private int currentWeight;
     
-    public Player(String name) {
+    public Player(String name, int maxWeight) {
         this.name = name;
         this.inventory = new ArrayList<>();
+        this.maxWeight = maxWeight;
+        this.currentWeight = 0;
     }
     
     public void setCurrentRoom(Room currentRoom) {
@@ -28,27 +32,41 @@ public class Player
         return name;
     }
     
-    public void addItem(Item item) {
-        inventory.add(item);
+    public boolean addItem(Item item) {
+        if (currentWeight + item.getWeight() <= maxWeight) {
+            inventory.add(item);
+            currentWeight += item.getWeight();
+            return true;
+        } else {
+            System.out.println("Max weight reached, keep training");
+            return false;
+        }
     }
 
     public boolean removeItem(Item item) {
-        return inventory.remove(item);
+        if (inventory.remove(item)) {
+            currentWeight -= item.getWeight();
+            return true;
+        }
+        return false;
     }
 
     public List<Item> getInventory() {
         return inventory;
     }
-
-    public String getInventoryString() {
+    
+    public void listItems() {
         if (inventory.isEmpty()) {
-            return "You currently are carrying nothing.";
+            System.out.println("You are carrying nothing.");
+            return;
         }
-        String returnString = "You are currently carrying the:";
+        System.out.println("Items carried:");
         for (Item item : inventory) {
-            returnString += " " + item.getName();
+            System.out.println(item.getName() + " (Weight: " + 
+            item.getWeight() + ")");
         }
-        return returnString;
+        System.out.println("Total weight: " + currentWeight + "/" + 
+        maxWeight);
     }
 }
 

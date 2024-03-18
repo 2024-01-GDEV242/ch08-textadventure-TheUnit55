@@ -36,7 +36,7 @@ public class Game
     public Game() 
     {
         parser = new Parser();
-        player = new Player("Z-Fighter");
+        player = new Player("Z-Fighter",50);
         createRooms();
     }
 
@@ -160,11 +160,17 @@ public class Game
             case BACK:
                 back();
                 break;
+                
             case TAKE:
                 takeItem(command);
                 break;
+                
             case DROP:
                 dropItem(command);
+                break;
+                
+            case ITEMS:
+                player.listItems();
                 break;
                 
         }
@@ -237,7 +243,7 @@ public class Game
     private void look()
     {
         System.out.println(player.getCurrentRoom().getLongDescription());
-        System.out.println(player.getInventoryString());
+        //System.out.println(player.getInventoryString());
     }
     
     /**
