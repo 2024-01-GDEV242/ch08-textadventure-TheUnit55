@@ -21,7 +21,7 @@ import java.util.List;
 public class Room 
 {
     private String description;
-    private HashMap<String, Room> exits;// stores exits of this room.
+    private HashMap<String, Room> exits;
     private List<Item> items;
     
     /**

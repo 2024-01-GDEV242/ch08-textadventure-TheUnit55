@@ -68,5 +68,19 @@ public class Player
         System.out.println("Total weight: " + currentWeight + "/" + 
         maxWeight);
     }
+
+    public Item getItemByName(String name) {
+        for (Item item : inventory) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+    public void increaseMaxWeight(int weight) {
+        this.maxWeight += weight;
+        System.out.println("Your power has increased by " + weight + ".");
+    }
 }
 

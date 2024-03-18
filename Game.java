@@ -46,7 +46,8 @@ public class Game
     private void createRooms()
     {
         Room home, grampsHome, hideout, oMansion, sCity, fPMountain, rMPath, pCastle;
-      
+        Item senzuBean = new Item("SenzuBean", "a special bean that restores energy and increases strength", 1);
+        
         // create the rooms
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
         
@@ -60,6 +61,7 @@ public class Game
         fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way");
         rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through");
         pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape");
+        pCastle.addItem(senzuBean);
         
         // initialise room exits
         home.setExit("north", oMansion);
@@ -154,7 +156,7 @@ public class Game
                 break;
                 
             case EAT:
-                eat();
+                eatItem(command);
                 break;
                 
             case BACK:
@@ -252,9 +254,27 @@ public class Game
      * player has eaten and is no longer hungry.
      * This method is used for game mechanics related to hunger or health.
      */
-    private void eat()
+    private void eatItem(Command command) 
     {
-        System.out.println("You have eaten and are not hungry anymore");
+        if (!command.hasSecondWord()) {
+            System.out.println("Eat what?");
+            return;
+        }
+
+        String itemToEat = command.getSecondWord();
+        if (itemToEat.equalsIgnoreCase("SenzuBean")) {
+            
+            Item senzuBean = player.getItemByName(itemToEat);
+            if (senzuBean != null) {
+                player.increaseMaxWeight(10);
+                player.removeItem(senzuBean);
+                System.out.println("You've eaten the Senzu Bean. You've gained power and can carry more.");
+            } else {
+                System.out.println("There's no Senzu Bean to eat.");
+            }
+        } else {
+            System.out.println("You can't eat that.");
+        }
     }
     
     /**
