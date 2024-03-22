@@ -82,5 +82,23 @@ public class Player
         this.maxWeight += weight;
         System.out.println("Your power has increased by " + weight + ".");
     }
+    
+    public boolean hasKey(String keyName) {
+        for (Item item : inventory) {
+            if (item instanceof Key && item.getName().equalsIgnoreCase(keyName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Item getKey(String keyName) {
+        for (Item item : inventory) {
+            if (item.getName().equalsIgnoreCase(keyName) && item instanceof Key) {
+                return item;
+            }
+        }
+        return null;
+    }
 }
 

@@ -23,6 +23,8 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;
     private List<Item> items;
+    private boolean isLocked;
+    private String keyName;
     
     /**
      * Create a room described "description". Initially, it has
@@ -35,6 +37,8 @@ public class Room
         this.description = description;
         this.items = new ArrayList<>();
         this.exits = new HashMap<>();
+        this.isLocked = false;
+        this.keyName = null;
     }
 
     /**
@@ -133,9 +137,41 @@ public class Room
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(itemName)) {
                 return item;
-        }
+            }
         }
         return null;
     }
+    
+    public void lock(String keyName) {
+        isLocked = true;
+        this.keyName = keyName;
+    }
+
+    public boolean unlock(Item key) {
+        if (key.getName().equals(this.keyName)) {
+            isLocked = false;
+            System.out.println("You now have access");
+            return true;
+        }
+        System.out.println("Not the right key");
+        return false;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    /**
+     * This method returns the name of the key needed to unlock the room.
+     * @return The name of the key.
+     */
+    public String getKeyName() {
+        return keyName;
+    }
+    
+    public void unlock() {
+        this.isLocked = false;
+    }
+
 }
 

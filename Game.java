@@ -48,10 +48,13 @@ public class Game
         Room home, grampsHome, hideout, oMansion, sCity, fPMountain, rMPath, pCastle,
         parCity, westCity, timeMachine, frzLandingShip, gingerTown, centralCity, cellGames,
         majinBuuHome, korinTower, lookout, redRHeadquater, giranVillage, fortuneBaba,
-        babidiSpaceship, namVillage; //SouthCity, papaya island, training island, KameHouse,
+        babidiSpaceship, namVillage, kameHouse; //SouthCity, papaya island, training island, KameHouse,
         //kingKaiPnt
         
         Item senzuBean = new Item("SenzuBean", "a special bean that restores energy and increases strength", 1);
+        
+        Key turtleShell = new Key("TurtleShell", "Master Roshi's companion", 1, "kameHouse");
+
         
         // create the rooms
         home = new Room("In Goku's Home, where he lives with his wife ChiChi");
@@ -65,6 +68,7 @@ public class Game
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
         
         fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way");
+        fPMountain.addItem(turtleShell);
         
         rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through");
         
@@ -104,6 +108,10 @@ public class Game
         oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
         
         sCity = new Room("At the great Satan City");
+        //going south from home
+        kameHouse = new Room("At master Roshi's house where the z-fighters hang out");
+        kameHouse.lock("turtleShell");
+        
         
         // initialise room exits
         home.setExit("north", oMansion);
@@ -111,6 +119,7 @@ public class Game
         home.setExit("southwest", hideout);
         
         grampsHome.setExit("northwest",home );
+        grampsHome.setExit("south", kameHouse);
         
         hideout.setExit("northeast", home);
         hideout.setExit("west", fPMountain);
@@ -160,7 +169,7 @@ public class Game
         
         sCity.setExit("west", oMansion);
     
-        
+        kameHouse.setExit("north", grampsHome);
         
 
         player.setCurrentRoom(home);  // start game at home
@@ -276,21 +285,27 @@ public class Game
     private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
         }
 
         String direction = command.getSecondWord();
-
         Room currentRoom = player.getCurrentRoom();
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is nothing there");
+        } else if (nextRoom.isLocked()) {
+            if (player.hasKey(nextRoom.getKeyName())) {
+            nextRoom.unlock();
+            System.out.println("You have been granted access");
+            player.setCurrentRoom(nextRoom);
+            System.out.println(player.getCurrentRoom().getLongDescription());
         } else {
-            roomHistory.push(currentRoom); 
-            player.setCurrentRoom(nextRoom); 
+            System.out.println("You don't have the key.");
+            }
+        } else {
+            player.setCurrentRoom(nextRoom);
             System.out.println(player.getCurrentRoom().getLongDescription());
         }
     }
@@ -307,7 +322,7 @@ public class Game
             return false;
         }
         else {
-            return true;  // signal that we want to quit
+            return true;
         }
     }
     
@@ -321,7 +336,6 @@ public class Game
     private void look()
     {
         System.out.println(player.getCurrentRoom().getLongDescription());
-        //System.out.println(player.getInventoryString());
     }
     
     /**
