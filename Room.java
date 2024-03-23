@@ -25,6 +25,7 @@ public class Room
     private List<Item> items;
     private boolean isLocked;
     private String keyName;
+    private int damage;
     
     /**
      * Create a room described "description". Initially, it has
@@ -32,13 +33,14 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, int damage) 
     {
         this.description = description;
         this.items = new ArrayList<>();
         this.exits = new HashMap<>();
         this.isLocked = false;
         this.keyName = null;
+        this.damage = damage;
     }
 
     /**
@@ -173,5 +175,8 @@ public class Room
         this.isLocked = false;
     }
 
+    public int getDamage() {
+        return damage;
+    }
 }
 

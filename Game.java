@@ -36,7 +36,7 @@ public class Game
     public Game() 
     {
         parser = new Parser();
-        player = new Player("Z-Fighter",50);
+        player = new Player("Z-Fighter",50, 100);
         createRooms();
     }
 
@@ -57,59 +57,59 @@ public class Game
 
         
         // create the rooms
-        home = new Room("In Goku's Home, where he lives with his wife ChiChi");
+        home = new Room("In Goku's Home, where he lives with his wife ChiChi", 10);
         
         //going east from home
-        grampsHome = new Room("at Grandpas Gohans home where goku started his journey");
+        grampsHome = new Room("at Grandpas Gohans home where goku started his journey", 10);
         grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
         grampsHome.addItem(new Item("PowerPole", "extending staff", 10));
         
         //going west from home
-        hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar");
+        hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar", 10);
         
-        fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way");
+        fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way", 10);
         fPMountain.addItem(turtleShell);
         
-        rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through");
+        rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through", 10);
         
-        pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape");
+        pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape", 10);
         pCastle.addItem(senzuBean);
         
-        parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans");
+        parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans", 10);
         
-        westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located");
+        westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located", 10);
         
-        timeMachine = new Room("Trunk's time machine where he crosses timelines");
+        timeMachine = new Room("Trunk's time machine where he crosses timelines", 10);
         
-        frzLandingShip = new Room("where freiza landed when he came to earth to wreck havoc");
+        frzLandingShip = new Room("where freiza landed when he came to earth to wreck havoc", 10);
         
-        gingerTown = new Room("A suburb of West city where cell first absorbed the population");
+        gingerTown = new Room("A suburb of West city where cell first absorbed the population", 10);
         
-        majinBuuHome = new Room("where majin buu lived with Hercule and their pet dog");
+        majinBuuHome = new Room("where majin buu lived with Hercule and their pet dog", 10);
         
-        korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives");
+        korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives", 10);
         
-        lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is");
+        lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is", 10);
         
-        redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army");
+        redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army", 10);
         
-        giranVillage = new Room("where Giran and the rest of the giras live in the village");
+        giranVillage = new Room("where Giran and the rest of the giras live in the village", 10);
         
-        fortuneBaba = new Room("where baba the witch lives in her palace with her five warriors");
+        fortuneBaba = new Room("where baba the witch lives in her palace with her five warriors", 10);
         
-        babidiSpaceship = new Room("created by babadi via magic which held majin buu");
+        babidiSpaceship = new Room("created by babadi via magic which held majin buu", 10);
         
-        namVillage = new Room("where nam live's in a naturally barren region with very low annual rainfall, the environment\n is very harsh");
+        namVillage = new Room("where nam live's in a naturally barren region with very low annual rainfall, the environment\n is very harsh", 10);
         
-        centralCity = new Room("Largest city with location of King's castle, where \n where King Furry main residence is");
+        centralCity = new Room("Largest city with location of King's castle, where \n where King Furry main residence is", 10);
         
-        cellGames = new Room("Where cell once gave the earth's greatest fighters 10 days \n to train and prepare to save their world");
+        cellGames = new Room("Where cell once gave the earth's greatest fighters 10 days \n to train and prepare to save their world", 10);
         //going north from home
-        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting");
+        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting", 10);
         
-        sCity = new Room("At the great Satan City");
+        sCity = new Room("At the great Satan City", 10);
         //going south from home
-        kameHouse = new Room("At master Roshi's house where the z-fighters hang out");
+        kameHouse = new Room("At master Roshi's house where the z-fighters hang out", 10);
         kameHouse.lock("turtleShell");
         
         
@@ -353,10 +353,11 @@ public class Game
 
         String itemToEat = command.getSecondWord();
         if (itemToEat.equalsIgnoreCase("SenzuBean")) {
-            
             Item senzuBean = player.getItemByName(itemToEat);
             if (senzuBean != null) {
                 player.increaseMaxWeight(10);
+                player.increaseMaxHealth(20);
+                player.heal(20);
                 player.removeItem(senzuBean);
                 System.out.println("You've eaten the Senzu Bean. You've gained power and can carry more.");
             } else {

@@ -12,12 +12,16 @@ public class Player
     private List<Item> inventory;
     private int maxWeight;
     private int currentWeight;
+    private int maxHealth;
+    private int currentHealth;
     
-    public Player(String name, int maxWeight) {
+    public Player(String name, int maxWeight, int maxHealth) {
         this.name = name;
         this.inventory = new ArrayList<>();
         this.maxWeight = maxWeight;
         this.currentWeight = 0;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
     }
     
     public void setCurrentRoom(Room currentRoom) {
@@ -99,6 +103,63 @@ public class Player
             }
         }
         return null;
+    }
+    
+    public void receiveDamage(int damage) {
+        currentHealth -= damage;
+        if (currentHealth <= 0) {
+            currentHealth = 0;
+            System.out.println("You have been defeated. Game Over.");
+            
+        } else {
+            System.out.println("You've taken " + damage + " damage. Current health: " +
+            currentHealth + "/" + maxHealth);
+        }
+    }
+
+    public void heal(int amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid heal amount.");
+            return;
+        }
+        this.currentHealth += amount;
+        if (this.currentHealth > this.maxHealth) {
+            this.currentHealth = this.maxHealth;
+        }
+        System.out.println("You've been healed. Current health: " + this.currentHealth +
+        "/" + this.maxHealth);
+    }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+    
+    public boolean isAlive() {
+        return currentHealth > 0;
+    }
+    
+     public void increaseHealth(int amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid heal amount.");
+            return;
+        }
+        this.currentHealth += amount;
+        if (this.currentHealth >= this.maxHealth) {
+            this.currentHealth = this.maxHealth;
+        }
+        System.out.println("Your health has increased by " + amount +
+        ". Current health: " + this.currentHealth + "/" + this.maxHealth);
+    }
+    
+    public void increaseMaxHealth(int amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid health increase amount.");
+            return;
+        }
+        this.maxHealth += amount;
+        this.currentHealth += amount;
+        System.out.println("Your maximum health has increased by " + amount + 
+        ". Max health: " + this.maxHealth);
     }
 }
 
