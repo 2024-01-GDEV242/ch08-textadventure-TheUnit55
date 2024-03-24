@@ -14,6 +14,7 @@ public class Player
     private int currentWeight;
     private int maxHealth;
     private int currentHealth;
+    private int additionalDamage = 0;
     
     public Player(String name, int maxWeight, int maxHealth) {
         this.name = name;
@@ -161,5 +162,16 @@ public class Player
         System.out.println("Your maximum health has increased by " + amount + 
         ". Max health: " + this.maxHealth);
     }
+
+    public void equipWeapon(Weapon weapon) {
+        additionalDamage += weapon.getDamageIncrease();
+        System.out.println(weapon.getName() + " equipped. Damage increase: " + 
+        weapon.getDamageIncrease());
+    }
+
+    public int getAdditionalDamage() {
+        return additionalDamage;
+    }
 }
+
 

@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.Random;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -62,10 +64,14 @@ public class Game
         //going east from home
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey", 10);
         grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
-        grampsHome.addItem(new Item("PowerPole", "extending staff", 10));
+        Weapon powerPole = new Weapon("PowerPole" , "An extending staff", 10, 5);
+        grampsHome.addItem(powerPole);
         
         //going west from home
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar", 10);
+        Item yamchaDropItem = new Item("WolfHide", "Clothes made from wolf hide", 1);
+        Villain yamcha = new Villain("yamcha", 30, yamchaDropItem);
+        hideout.setVillain(yamcha);
         
         fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way", 10);
         fPMountain.addItem(turtleShell);
@@ -260,6 +266,13 @@ public class Game
                 player.listItems();
                 break;
                 
+            case FIGHT:
+                fightVillain(command);
+                break;
+                
+            case HEALTH:
+                System.out.println("Current health: " + player.getCurrentHealth());
+                break;
         }
         return wantToQuit;
     }
@@ -398,11 +411,16 @@ public class Game
         Item itemToTake = player.getCurrentRoom().getItem(itemName);
 
         if (itemToTake == null) {
-            System.out.println("That's not here");
+            System.out.println("That's not here.");
         } else {
             player.getCurrentRoom().removeItem(itemToTake);
             player.addItem(itemToTake);
-            System.out.println("Taken.");
+            System.out.println(itemToTake.getName() + " taken.");
+            if (itemToTake instanceof Weapon) {
+                player.equipWeapon((Weapon)itemToTake);
+                System.out.println("You equipped " + itemToTake.getName() + " as a weapon.");
+            
+            }
         }
     }
     
@@ -427,5 +445,64 @@ public class Game
             player.getCurrentRoom().addItem(itemToDrop);
             System.out.println("Dropped.");
         }
+    }
+    
+    private void fightVillain(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Fight what?");
+            return;
+        }
+
+        String fightWith = command.getSecondWord().toLowerCase();
+        Room currentRoom = player.getCurrentRoom();
+
+        if (currentRoom.hasVillain()) {
+            Villain villain = currentRoom.getVillain();
+            Random rand = new Random();
+            String[] choices = {"rock", "paper", "scissors"};
+            String playerChoice = fightWith;
+            String villainChoice = choices[rand.nextInt(choices.length)];
+
+            System.out.println("You chose " + playerChoice + ". Villain chose " + 
+            villainChoice + ".");
+            if (playerChoice.equals(villainChoice)) {
+                System.out.println("It's a draw.");
+            } else if ((playerChoice.equals("rock") && villainChoice.equals("scissors")) ||
+                   (playerChoice.equals("paper") && villainChoice.equals("rock")) ||
+                   (playerChoice.equals("scissors") && villainChoice.equals("paper"))) {
+                System.out.println("You win!");
+                int damageDealt = 20 + player.getAdditionalDamage(); 
+                villain.takeDamage(damageDealt);
+                if (villain.isDefeated()) {
+                    System.out.println(villain.getName() + " is defeated!");
+                    if (villain.getDropItem() != null) {
+                        currentRoom.removeItem(villain.getDropItem());
+                        player.addItem(villain.getDropItem());
+                        System.out.println("You obtained " + 
+                        villain.getDropItem().getName() + ".");
+                    }
+                }
+            }else {
+                System.out.println("You lose.");
+                player.receiveDamage(10);
+            }
+        } else {
+            System.out.println("There is no villain to fight here.");
+        }
+    }   
+    
+    private void fight(Command command) {
+        if (!command.hasSecondWord()) {
+            System.out.println("Fight who?");
+            return;
+        }
+
+        Room currentRoom = player.getCurrentRoom();
+        if (!currentRoom.hasVillain()) {
+            System.out.println("There's no one here to fight.");
+            return;
+        }
+
+        Villain villain = currentRoom.getVillain();
     }
 }

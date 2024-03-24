@@ -26,6 +26,7 @@ public class Room
     private boolean isLocked;
     private String keyName;
     private int damage;
+    private Villain villain;
     
     /**
      * Create a room described "description". Initially, it has
@@ -66,8 +67,14 @@ public class Room
      * @return A description of the room, its exits, and any items it has.
      */
     public String getLongDescription() {
-        return "You are " + description + ".\n" + getExitString() + 
+        String description = "You are " + this.description + ".\n" + getExitString() + 
         getItemDescriptions();
+        if (hasVillain()) {
+            description += "\nnew foe appeared " + villain.getName() + 
+            " who is ready to fight. Villain Health: " + villain.getHealth() + 
+            "\nfighting options are fight[rock, paper, scissors]";
+        }
+        return description;
     }
 
     /**
@@ -177,6 +184,18 @@ public class Room
 
     public int getDamage() {
         return damage;
+    }
+    
+        public void setVillain(Villain villain) {
+        this.villain = villain;
+    }
+
+    public Villain getVillain() {
+        return villain;
+    }
+
+    public boolean hasVillain() {
+        return villain != null && !villain.isDefeated();
     }
 }
 
