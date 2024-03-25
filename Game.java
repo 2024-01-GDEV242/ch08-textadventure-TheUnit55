@@ -23,6 +23,7 @@ public class Game
     private Parser parser;
     private Player player;
     private Stack<Room> roomHistory = new Stack<>();
+    private Room lookout;
     
     /**
      * main method so it can be run outside of Blue J 
@@ -50,8 +51,11 @@ public class Game
         Room home, grampsHome, hideout, oMansion, sCity, fPMountain, rMPath, pCastle,
         parCity, westCity, timeMachine, frzLandingShip, gingerTown, centralCity, cellGames,
         majinBuuHome, korinTower, lookout, redRHeadquater, giranVillage, fortuneBaba,
-        babidiSpaceship, namVillage, kameHouse; //SouthCity, papaya island, training island, KameHouse,
-        //kingKaiPnt
+        babidiSpaceship, namVillage, kameHouse, southCity, papayaIsland, trainingIsland, 
+        pirateCave, blueCompanyBase, penguinVillage, KameHouse, kingKaiPnt, raditzLanding,
+        eastCity, silverPlatoonBase, jingleVillage, muscleTower, drGeroLab, northCity;
+        
+       
         
         Item senzuBean = new Item("SenzuBean", "a special bean that restores energy and increases strength", 1);
         
@@ -63,7 +67,15 @@ public class Game
         
         //going east from home
         grampsHome = new Room("at Grandpas Gohans home where goku started his journey", 10);
-        grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
+        grampsHome.addItem(new DragonBall("DragonBall1","1 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall2","2 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall3","3 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall4","4 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall5","5 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall6","6 star DragonBall", 2));
+        grampsHome.addItem(new DragonBall("DragonBall7","7 star DragonBall", 2));
+        
+        //grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
         Weapon powerPole = new Weapon("PowerPole" , "An extending staff", 10, 5);
         grampsHome.addItem(powerPole);
         
@@ -96,6 +108,7 @@ public class Game
         korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives", 10);
         
         lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is", 10);
+        this.lookout = lookout;
         
         redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army", 10);
         
@@ -114,9 +127,38 @@ public class Game
         oMansion = new Room("in Oolongs mansion where he practices his shapeShifting", 10);
         
         sCity = new Room("At the great Satan City", 10);
+        
+        raditzLanding = new Room("",10);
+        
+        eastCity = new Room("",10); 
+        
+        silverPlatoonBase = new Room("",10);
+        
+        jingleVillage = new Room("",10);
+        
+        muscleTower = new Room("",10);
+        
+        drGeroLab = new Room("",10);
+        
+        northCity = new Room("",10);
+        
         //going south from home
         kameHouse = new Room("At master Roshi's house where the z-fighters hang out", 10);
         kameHouse.lock("turtleShell");
+        
+        trainingIsland = new Room("",10);
+        
+        pirateCave = new Room("",10);
+        
+        blueCompanyBase = new Room("",10);
+        
+        penguinVillage = new Room("",10);
+        
+        kingKaiPnt = new Room("",10);
+        
+        papayaIsland = new Room("",10);
+        
+        southCity = new Room("",10);
         
         
         // initialise room exits
@@ -127,6 +169,7 @@ public class Game
         grampsHome.setExit("northwest",home );
         grampsHome.setExit("south", kameHouse);
         
+        //going west
         hideout.setExit("northeast", home);
         hideout.setExit("west", fPMountain);
         
@@ -152,6 +195,7 @@ public class Game
         timeMachine.setExit("north", cellGames);
         
         centralCity.setExit("west", timeMachine);
+        centralCity.setExit("north", northCity);
         
         cellGames.setExit("south", timeMachine);
         cellGames.setExit("west", frzLandingShip);
@@ -167,17 +211,82 @@ public class Game
         
         korinTower.setExit("northeast", majinBuuHome);
         korinTower.setExit("up", lookout);
+        korinTower.setExit("south", redRHeadquater);
         
         lookout.setExit("down", korinTower);
         
+        redRHeadquater.setExit("north", korinTower);
+        redRHeadquater.setExit("southwest", giranVillage);
+        redRHeadquater.setExit("southeast", babidiSpaceship);
+        
+        giranVillage.setExit("northeast", redRHeadquater);
+        giranVillage.setExit("southeast", fortuneBaba);
+        
+        fortuneBaba.setExit("northwest", giranVillage);
+        fortuneBaba.setExit("northeast", babidiSpaceship);
+        fortuneBaba.setExit("southwest", namVillage);
+        fortuneBaba.setExit("east", southCity);
+        
+        babidiSpaceship.setExit("northwest", redRHeadquater);
+        babidiSpaceship.setExit("southwest", fortuneBaba);
+        
+        namVillage.setExit("northeast", fortuneBaba);
+        
+        //going North
         oMansion.setExit("east",sCity );
         oMansion.setExit("south",home );
         
         sCity.setExit("west", oMansion);
-    
-        kameHouse.setExit("north", grampsHome);
+        sCity.setExit("north", raditzLanding);
         
-
+        raditzLanding.setExit("south", sCity );
+        raditzLanding.setExit("east", eastCity);
+        
+        eastCity.setExit("west", raditzLanding );
+        eastCity.setExit("east", silverPlatoonBase);
+        
+        silverPlatoonBase.setExit("west", eastCity);
+        silverPlatoonBase.setExit("northwest", jingleVillage );
+        
+        jingleVillage.setExit("southeast", silverPlatoonBase);
+        jingleVillage.setExit("north", muscleTower );
+        
+        muscleTower.setExit("south", jingleVillage);
+        muscleTower.setExit("west", drGeroLab);
+        
+        drGeroLab.setExit("east", muscleTower);
+        drGeroLab.setExit("west", northCity);
+        
+        northCity.setExit("east", drGeroLab);
+        northCity.setExit("south", centralCity);
+    
+        //going south
+        kameHouse.setExit("north", grampsHome);
+        kameHouse.setExit("southwest", trainingIsland);
+        kameHouse.setExit("southeast", blueCompanyBase);
+        
+        trainingIsland.setExit("northeast", kameHouse);
+        trainingIsland.setExit("south", pirateCave);
+        trainingIsland.setExit("west", papayaIsland);
+        trainingIsland.setExit("afterlife", kingKaiPnt);
+        
+        pirateCave.setExit("north", trainingIsland);
+        
+        blueCompanyBase.setExit("northwest", kameHouse);
+        blueCompanyBase.setExit("east", penguinVillage);
+        
+        penguinVillage.setExit("west", blueCompanyBase);
+        penguinVillage.setExit("afterlife", kingKaiPnt);
+        
+        kingKaiPnt.setExit("penguinVillage", penguinVillage);
+        kingKaiPnt.setExit("trainingIsland", trainingIsland);
+        
+        papayaIsland.setExit("east", trainingIsland);
+        papayaIsland.setExit("west", southCity);
+        
+        southCity.setExit("east", papayaIsland);
+        southCity.setExit("west", fortuneBaba);
+        
         player.setCurrentRoom(home);  // start game at home
     }
 
@@ -196,7 +305,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing DragonBall text adventure. Good bye.");
     }
 
     /**
@@ -273,7 +382,17 @@ public class Game
             case HEALTH:
                 System.out.println("Current health: " + player.getCurrentHealth());
                 break;
-        }
+                
+            case SUMMON:
+                if (player.getCurrentRoom().equals(lookout) && 
+                    player.countDragonBalls() == 7) {
+                    System.out.println("You have collected all 7 dragon balls and summoned Shenron. You win!");
+                    wantToQuit = true;
+                } else {
+                    System.out.println("Nothing happens, are at the lookout with all 7 Dragon Balls.");
+                }
+                break;
+            }
         return wantToQuit;
     }
 

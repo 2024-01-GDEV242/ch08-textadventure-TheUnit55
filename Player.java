@@ -4,7 +4,10 @@ import java.util.List;
  * The Player class represents a player in the adventure game. 
  * It stores information about the player, including their name 
  * and their current location within the game.
- */
+ *
+ * @author Juan Jimenez
+ * @version 2024-03-11
+ **/
 public class Player 
 {
     private String name;
@@ -172,6 +175,17 @@ public class Player
     public int getAdditionalDamage() {
         return additionalDamage;
     }
+
+    public int countDragonBalls() {
+        int count = 0;
+        for (Item item : inventory) {
+            if (item instanceof DragonBall) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
 
 
