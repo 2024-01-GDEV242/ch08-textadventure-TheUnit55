@@ -55,110 +55,141 @@ public class Game
         pirateCave, blueCompanyBase, penguinVillage, KameHouse, kingKaiPnt, raditzLanding,
         eastCity, silverPlatoonBase, jingleVillage, muscleTower, drGeroLab, northCity;
         
-       
-        
         Item senzuBean = new Item("SenzuBean", "a special bean that restores energy and increases strength", 1);
         
         Key turtleShell = new Key("TurtleShell", "Master Roshi's companion", 1, "kameHouse");
-
+        Key upKey = new Key("upKey", "key to access lookout", 1, "lookout");
+        Key afterLife = new Key("afterLife", "key access to KingKai planet", 1, "kingKaiPnt");
         
         // create the rooms
-        home = new Room("In Goku's Home, where he lives with his wife ChiChi", 10);
+        home = new Room("In Goku's Home, where he lives with his wife ChiChi", 0);
         
         //going east from home
-        grampsHome = new Room("at Grandpas Gohans home where goku started his journey", 10);
-        grampsHome.addItem(new DragonBall("DragonBall1","1 star DragonBall", 2));
-        grampsHome.addItem(new DragonBall("DragonBall2","2 star DragonBall", 2));
-        grampsHome.addItem(new DragonBall("DragonBall3","3 star DragonBall", 2));
+        grampsHome = new Room("at Grandpas Gohans home where goku started his journey", 0);
         grampsHome.addItem(new DragonBall("DragonBall4","4 star DragonBall", 2));
-        grampsHome.addItem(new DragonBall("DragonBall5","5 star DragonBall", 2));
-        grampsHome.addItem(new DragonBall("DragonBall6","6 star DragonBall", 2));
-        grampsHome.addItem(new DragonBall("DragonBall7","7 star DragonBall", 2));
-        
-        //grampsHome.addItem(new Item("DragonBall","4 star dragon ball", 2));
         Weapon powerPole = new Weapon("PowerPole" , "An extending staff", 10, 5);
         grampsHome.addItem(powerPole);
         
         //going west from home
-        hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar", 10);
-        Item yamchaDropItem = new Item("WolfHide", "Clothes made from wolf hide", 1);
-        Villain yamcha = new Villain("yamcha", 30, yamchaDropItem);
+        hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar", 0);
+        Weapon wolfFangFist = new Weapon("wolfFangFist" , "Yamcha's secret technique", 0, 5);
+        
+        //Item yamchaDropItem = new Item("WolfFangFist", "", 1);
+        //Villain yamcha = new Villain("yamcha", 30, yamchaDropItem);
+        
+        Villain yamcha = new Villain("yamcha", 30, wolfFangFist);
         hideout.setVillain(yamcha);
         
-        fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way", 10);
+        fPMountain = new Room("At FryPan Mountain where the Ox-King lived on fire mountain \nwhere goku meet ChiChi and Master Roshi showed his famous kamehame way", 0);
         fPMountain.addItem(turtleShell);
         
-        rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through", 10);
+        rMPath = new Room("Where the Rabbit gang who are a trio of rabbit worshipers who \nterrize people on passing through", 0);
         
-        pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape", 10);
-        pCastle.addItem(senzuBean);
+        pCastle = new Room("Arrived at Pilaf's castle where it used to be his main residence \nbut was turned into rubble when goku looked at the fullMoon and became \na great Ape", 0);
+        Villain robotMachine = new Villain("Pilaf's gang", 60, senzuBean);
+        pCastle.setVillain(robotMachine);
         
-        parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans", 10);
+        parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans", 0);
         
-        westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located", 10);
+        westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located", 0);
+        Weapon dmgCap = new Weapon("capsule" , "10 additional Damage", 0, 0);
+        westCity.addItem(dmgCap);
         
-        timeMachine = new Room("Trunk's time machine where he crosses timelines", 10);
+        timeMachine = new Room("Trunk's time machine where he crosses timelines", 0);
         
-        frzLandingShip = new Room("where freiza landed when he came to earth to wreck havoc", 10);
+        frzLandingShip = new Room("where freiza landed when he came to earth to wreck havoc", 0);
+        DragonBall dragonball1 = new DragonBall("DragonBall1","1 star DragonBall", 2);
+        Villain freiza = new Villain("frieza", 100, dragonball1);
+        frzLandingShip.setVillain(freiza);
         
-        gingerTown = new Room("A suburb of West city where cell first absorbed the population", 10);
+        gingerTown = new Room("A suburb of West city where cell first absorbed the population", 0);
         
-        majinBuuHome = new Room("where majin buu lived with Hercule and their pet dog", 10);
+        majinBuuHome = new Room("where majin buu lived with Hercule and their pet dog", 0);
+        DragonBall dragonball2 = new DragonBall("DragonBall2","2 star DragonBall", 2);
+        Villain majinBuu = new Villain("majinBuu", 200, dragonball2);
+        majinBuuHome.setVillain(majinBuu);
         
-        korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives", 10);
+        korinTower = new Room("At the great tower where korin the hermit grows Senzu beans \n and lives", 0);
+        korinTower.addItem(senzuBean);
         
-        lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is", 10);
+        lookout = new Room("At the lookout where the gardian of earth watches over earth\n and where the hyperbolic time chamber is", 0);
         this.lookout = lookout;
+        lookout.lock("upKey");
         
-        redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army", 10);
+        redRHeadquater = new Room("The Red Ribbon headquaters where commander Red once orded \n his army", 0);
         
-        giranVillage = new Room("where Giran and the rest of the giras live in the village", 10);
+        giranVillage = new Room("where Giran and the rest of the giras live in the village", 0);
         
-        fortuneBaba = new Room("where baba the witch lives in her palace with her five warriors", 10);
+        fortuneBaba = new Room("where baba the witch lives in her palace with her five warriors", 0);
+        fortuneBaba.addItem(afterLife);
         
-        babidiSpaceship = new Room("created by babadi via magic which held majin buu", 10);
+        babidiSpaceship = new Room("created by babadi via magic which held majin buu", 0);
         
-        namVillage = new Room("where nam live's in a naturally barren region with very low annual rainfall, the environment\n is very harsh", 10);
+        namVillage = new Room("where nam live's in a naturally barren region with very low annual rainfall, the environment\n is very harsh", 0);
         
-        centralCity = new Room("Largest city with location of King's castle, where \n where King Furry main residence is", 10);
+        centralCity = new Room("Largest city with location of King's castle, where \n where King Furry main residence is", 0);
         
-        cellGames = new Room("Where cell once gave the earth's greatest fighters 10 days \n to train and prepare to save their world", 10);
+        cellGames = new Room("Where cell once gave the earth's greatest fighters 10 days \n to train and prepare to save their world", 0);
+        DragonBall dragonball3 = new DragonBall("DragonBall3","3 star DragonBall", 2);
+        Villain cell = new Villain("cell", 150, dragonball3);
+        cellGames.setVillain(cell);
+        
         //going north from home
-        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting", 10);
+        oMansion = new Room("in Oolongs mansion where he practices his shapeShifting", 0);
         
-        sCity = new Room("At the great Satan City", 10);
+        sCity = new Room("At the great Satan City", 0);
         
-        raditzLanding = new Room("",10);
+        raditzLanding = new Room("Where raditz took Gohan and kept him captive in the farm fields",0);
+        DragonBall dragonball5 = new DragonBall("DragonBall5","5 star DragonBall", 2);
+        Villain raditz = new Villain("raditz", 50, dragonball5);
+        raditzLanding.setVillain(raditz);
         
-        eastCity = new Room("",10); 
+        eastCity = new Room("The east capital, where Vegeta and Nappa first landed when they arrived on earth",0); 
         
-        silverPlatoonBase = new Room("",10);
+        silverPlatoonBase = new Room("Colonel Silver's camp where his platoon is temporarly based ",0);
+        Villain silver = new Villain("Commander silver", 60, senzuBean);
+        silverPlatoonBase.setVillain(silver);
         
-        jingleVillage = new Room("",10);
+        jingleVillage = new Room("A small village thats always snowy where android 8 lived and \nprotected the town",0);
         
-        muscleTower = new Room("",10);
+        muscleTower = new Room("A headquaters of red ribbon army where there is levels each \ncontaining powerful army commanders",0);
+        DragonBall dragonball6 = new DragonBall("DragonBall6","6 star DragonBall", 2);
+        Villain tao = new Villain("mercenary tao", 100, dragonball6);
+        muscleTower.setVillain(tao);
         
-        drGeroLab = new Room("",10);
+        drGeroLab = new Room("Where Dr Gero took refuge and did his research for developing andriods \n in the hope to strengthen the army",0);
         
-        northCity = new Room("",10);
+        northCity = new Room("A large metropolis capital surrounded by mountains and a forest",0);
         
         //going south from home
-        kameHouse = new Room("At master Roshi's house where the z-fighters hang out", 10);
+        kameHouse = new Room("At master Roshi's house where the z-fighters hang out", 0);
         kameHouse.lock("turtleShell");
+        kameHouse.addItem(upKey);
+        Weapon kamehame = new Weapon("kamehame" , "Master Roshi's secret technique", 0, 25);
+        kameHouse.addItem(kamehame);
         
-        trainingIsland = new Room("",10);
+        trainingIsland = new Room("A remote island where Master Roshi trained goku and krillan by delivering \nmilk to the locals",0);
         
-        pirateCave = new Room("",10);
+        pirateCave = new Room("A secret base of a Pirate crew known to house a fabled treasure trove",0);
         
-        blueCompanyBase = new Room("",10);
+        blueCompanyBase = new Room("General Blues temporary base where he searched for DragonBalls with his \narmy",0);
+        Villain blue = new Villain("General Blue", 60, senzuBean);
+        blueCompanyBase.setVillain(blue);
         
-        penguinVillage = new Room("",10);
+        penguinVillage = new Room("A isolated village where they dont use capsules and where Arale and friends \nlive",0);
         
-        kingKaiPnt = new Room("",10);
+        kingKaiPnt = new Room("Where KingKai lives, the gravity is intense. A perfect training spot for \nthe Z-fighterz",0);
+        Weapon kaioken = new Weapon("kaio-ken" , "KingKai's special technique", 0, 50);
+        kingKaiPnt.addItem(kaioken);
+        kingKaiPnt.addItem(senzuBean);
+        kingKaiPnt.lock("afterLife");
         
-        papayaIsland = new Room("",10);
+        papayaIsland = new Room("The location of World Martial Arts Tournament where the greatest fighters \nsee who is the best warrior on earth",0);
+        DragonBall dragonball7 = new DragonBall("DragonBall7","7 star DragonBall", 2);
+        Villain gokuBlack = new Villain("goku Black", 350, dragonball7);
+        papayaIsland.setVillain(gokuBlack);
         
-        southCity = new Room("",10);
+        southCity = new Room("The southern capital where Hercule recides on Satan castle",0);
         
         
         // initialise room exits
@@ -296,10 +327,6 @@ public class Game
     public void play() 
     {            
         printWelcome();
-
-        // Enter the main command loop.  Here we repeatedly read commands and
-        // execute them until the game is over.
-                
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -383,6 +410,10 @@ public class Game
                 System.out.println("Current health: " + player.getCurrentHealth());
                 break;
                 
+            case CURRENTDMG:
+                player.getCurrentDamage();
+                break;
+                
             case SUMMON:
                 if (player.getCurrentRoom().equals(lookout) && 
                     player.countDragonBalls() == 7) {
@@ -431,12 +462,14 @@ public class Game
             if (player.hasKey(nextRoom.getKeyName())) {
             nextRoom.unlock();
             System.out.println("You have been granted access");
+            roomHistory.push(currentRoom);
             player.setCurrentRoom(nextRoom);
             System.out.println(player.getCurrentRoom().getLongDescription());
         } else {
             System.out.println("You don't have the key.");
             }
         } else {
+            roomHistory.push(currentRoom);
             player.setCurrentRoom(nextRoom);
             System.out.println(player.getCurrentRoom().getLongDescription());
         }
@@ -489,7 +522,7 @@ public class Game
             if (senzuBean != null) {
                 player.increaseMaxWeight(10);
                 player.increaseMaxHealth(20);
-                player.heal(20);
+                player.heal(100);
                 player.removeItem(senzuBean);
                 System.out.println("You've eaten the Senzu Bean. You've gained power and can carry more.");
             } else {
@@ -537,7 +570,8 @@ public class Game
             System.out.println(itemToTake.getName() + " taken.");
             if (itemToTake instanceof Weapon) {
                 player.equipWeapon((Weapon)itemToTake);
-                System.out.println("You equipped " + itemToTake.getName() + " as a weapon.");
+                System.out.println("You equipped " + itemToTake.getName() + 
+                " Damage increase "+ ((Weapon)itemToTake).getDamageIncrease());
             
             }
         }
@@ -590,17 +624,26 @@ public class Game
                    (playerChoice.equals("paper") && villainChoice.equals("rock")) ||
                    (playerChoice.equals("scissors") && villainChoice.equals("paper"))) {
                 System.out.println("You win!");
-                int damageDealt = 20 + player.getAdditionalDamage(); 
+                 int damageDealt = player.getCurrentDamage(); 
                 villain.takeDamage(damageDealt);
                 if (villain.isDefeated()) {
                     System.out.println(villain.getName() + " is defeated!");
                     if (villain.getDropItem() != null) {
-                        currentRoom.removeItem(villain.getDropItem());
-                        player.addItem(villain.getDropItem());
-                        System.out.println("You obtained " + 
-                        villain.getDropItem().getName() + ".");
+                    currentRoom.removeItem(villain.getDropItem());
+                    player.addItem(villain.getDropItem());
+                    System.out.println("You obtained " + 
+                    villain.getDropItem().getName() + ".");
+                    if (villain.getDropItem() instanceof Weapon) {
+                    player.equipWeapon((Weapon)villain.getDropItem());
+                    System.out.println("Automatically equipped " +
+                    villain.getDropItem().getName() + ". Damage increase: " + 
+                    ((Weapon)villain.getDropItem()).getDamageIncrease());
+                    
                     }
                 }
+            }else {
+                System.out.println(villain.getName() + " has " + villain.getHealth() + " health left.");
+            }
             }else {
                 System.out.println("You lose.");
                 player.receiveDamage(10);

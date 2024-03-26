@@ -168,8 +168,6 @@ public class Player
 
     public void equipWeapon(Weapon weapon) {
         additionalDamage += weapon.getDamageIncrease();
-        System.out.println(weapon.getName() + " equipped. Damage increase: " + 
-        weapon.getDamageIncrease());
     }
 
     public int getAdditionalDamage() {
@@ -186,6 +184,10 @@ public class Player
         return count;
     }
 
+    public int getCurrentDamage() {
+        int baseDamage = 10;
+        return baseDamage + additionalDamage;
+    }
 }
 
 
