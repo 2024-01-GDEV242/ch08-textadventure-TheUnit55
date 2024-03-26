@@ -2,18 +2,11 @@ import java.util.Stack;
 import java.util.Random;
 
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
- * 
- *  To play this game, create an instance of this class and call the "play"
- *  method.
- * 
- *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
- * 
+ * Main class for the "DragonBalls" text-based adventure game. 
+ * Initializes the game environment and starts the game loop, processing player
+ * commands. The game includes exploration, item interaction, combat with villains, 
+ * and a quest for dragon balls.
+ *
  * @author Juan Jimenez
  * @version 2024-03-11
  */
@@ -34,17 +27,19 @@ public class Game
     }
     
     /**
-     * Create the game and initialise its internal map.
+     * Constructs a Game instance, initializes the game's parser, player,
+     * and game world.
      */
     public Game() 
     {
         parser = new Parser();
-        player = new Player("Z-Fighter",50, 100);
+        player = new Player("Z-Fighter",30, 100);
         createRooms();
     }
 
     /**
-     * Create all the rooms and link their exits together.
+     * Initializes the game world, creating rooms, items, and villains, and connecting 
+     * them together.
      */
     private void createRooms()
     {
@@ -74,9 +69,6 @@ public class Game
         hideout = new Room("at Yamcha's hideout in the desert with his buddy Puar", 0);
         Weapon wolfFangFist = new Weapon("wolfFangFist" , "Yamcha's secret technique", 0, 5);
         
-        //Item yamchaDropItem = new Item("WolfFangFist", "", 1);
-        //Villain yamcha = new Villain("yamcha", 30, yamchaDropItem);
-        
         Villain yamcha = new Villain("yamcha", 30, wolfFangFist);
         hideout.setVillain(yamcha);
         
@@ -92,7 +84,7 @@ public class Game
         parCity = new Room("At Parsley city where in an alternate timeline the androids \n attacked the humans", 0);
         
         westCity = new Room("At West City where Bulma lives and where capsule Corp headquaters \n is located", 0);
-        Weapon dmgCap = new Weapon("capsule" , "10 additional Damage", 0, 0);
+        Weapon dmgCap = new Weapon("capsule" , "10 additional Damage", 0, 10);
         westCity.addItem(dmgCap);
         
         timeMachine = new Room("Trunk's time machine where he crosses timelines", 0);
@@ -322,7 +314,7 @@ public class Game
     }
 
      /**
-     *  Main play routine.  Loops until end of play.
+     * Begins the game loop, processing player commands until the game ends.
      */
     public void play() 
     {            
@@ -336,7 +328,7 @@ public class Game
     }
 
     /**
-     * Print out the opening message for the player.
+     * Displays a welcome message to the player at the start of the game.
      */
     private void printWelcome()
     {
@@ -351,9 +343,9 @@ public class Game
     }
 
     /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
+     * Processes the player's command, performing actions based on the command's type.
+     * @param command The player's command.
+     * @return True if the game should end, otherwise false.
      */
     private boolean processCommand(Command command) 
     {
@@ -441,9 +433,9 @@ public class Game
         parser.showCommands();
     }
 
-    /** 
-     * Try to go in one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
+    /**
+     * Attempts to move the player to a different room based on the specified direction.
+     * @param command The command containing the direction to move.
      */
     private void goRoom(Command command) 
     {
@@ -492,11 +484,7 @@ public class Game
     }
     
     /**
-     * Prints the long description of the current room.
-     * This method is intended to be used to give the player a detailed
-     * description of their current location within the game.
-     * It retrieves the long description from the currentRoom object
-     * and prints it.
+     * Displays a detailed description of the player's current room.
      */
     private void look()
     {
@@ -504,10 +492,8 @@ public class Game
     }
     
     /**
-     * Simulates eating action within the game.
-     * When this method is called, it prints a message. indicating that the 
-     * player has eaten and is no longer hungry.
-     * This method is used for game mechanics related to hunger or health.
+     * Processes the player's attempt to eat an item, affecting their stats.
+     * @param command The command specifying what item to eat.
      */
     private void eatItem(Command command) 
     {
@@ -534,16 +520,7 @@ public class Game
     }
     
     /**
-     * Takes the player back to the previous room.
-     * This method allows the player to navigate back to the last room they 
-     * were in, It relies on a stack called roomHistory that tracks the player's
-     * movement history through the game. When invoked, it checks if the room 
-     * history is not empty, indicating that the player has previously moved 
-     * from another room. If so, it updates the currentRoom to the most recent
-     * room stored in the history and removes that entry from the history.
-     * The long description of the current room is then displayed. If the 
-     * player is in the starting room a message is then displayed that they 
-     * cannot go back further.
+     * Moves the player back to the previous room.
      */
     private void back() {
         if (!roomHistory.isEmpty()) {
@@ -554,6 +531,10 @@ public class Game
         }
     }
     
+    /**
+     * Allows the player to take an item from their current room.
+     * @param command The command specifying which item to take.
+     */
     private void takeItem(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Take what?");
@@ -577,6 +558,10 @@ public class Game
         }
     }
     
+    /**
+     * Allows the player to drop an item into their current room.
+     * @param command The command specifying which item to drop.
+     */
     private void dropItem(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Drop what?");
@@ -600,6 +585,10 @@ public class Game
         }
     }
     
+    /**
+     * Initiates a fight between the player and a villain in the current room.
+     * @param command The fight command, including the strategy chosen by the player.
+     */
     private void fightVillain(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Fight what?");
@@ -653,6 +642,15 @@ public class Game
         }
     }   
     
+    /**
+     * Initiates a fight with a villain in the player's current room. This method checks
+     * for the presence of a villain to fight and provides feedback if no villain is 
+     * available. 
+     *
+     * @param command The command issued by the player, expected to contain the action
+     * to fight.
+     * 
+     **/
     private void fight(Command command) {
         if (!command.hasSecondWord()) {
             System.out.println("Fight who?");

@@ -5,15 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class Room - a room in an adventure game.
+ * Represents a location in the game world. Each room has a description, exits to other
+ * rooms, items, and some a villain. Rooms can be locked and require a specific 
+ * item key to unlock.
  *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- *
- * A "Room" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
- * 
  * @author Juan Jimenez
  * @version 2024-03-11
  */
@@ -28,12 +23,14 @@ public class Room
     private int damage;
     private Villain villain;
     
+        
     /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * @param description The room's description.
-     */
+    * Constructs a Room with a description and initial damage setting.
+    * Initializes the room with no exits, no items, not locked, and without a villain.
+    *
+    * @param description The description of the room.
+    * @param damage The initial damage setting for the room.
+    */
     public Room(String description, int damage) 
     {
         this.description = description;
@@ -43,7 +40,7 @@ public class Room
         this.keyName = null;
         this.damage = damage;
     }
-
+    
     /**
      * Define an exit from this room.
      * @param direction The direction of the exit.
@@ -63,8 +60,10 @@ public class Room
     }
 
      /**
-     * Return a long description of the room, including exits and items present.
-     * @return A description of the room, its exits, and any items it has.
+     * Constructs and returns a long description of the room that includes exits, items,
+     * and any present villain.
+     *
+     * @return A detailed description of the room, its exits, items, and villain
      */
     public String getLongDescription() {
         String description = "You are " + this.description + ".\n" + getExitString() + 
@@ -78,8 +77,10 @@ public class Room
     }
 
     /**
-     * Return a string listing the items in the room, if there is any.
-     * @return A description of the items present in the room.
+     * Generates and returns a string listing all items in the room.
+     *
+     * @return A description of all items present in the room. Returns an empty string 
+     * if no items are present.
      */
     private String getItemDescriptions() {
         if (items.isEmpty()) {
@@ -151,11 +152,22 @@ public class Room
         return null;
     }
     
+    /**
+     * Locks the room, requiring a specific key to unlock.
+     *
+     * @param keyName The name of the key required to unlock the room.
+     */
     public void lock(String keyName) {
         isLocked = true;
         this.keyName = keyName;
     }
 
+    /**
+     * Attempts to unlock the room using a provided item as a key.
+     *
+     * @param key The item used as a key to attempt unlocking the room.
+     * @return true if the room was successfully unlocked, false otherwise.
+     */
     public boolean unlock(Item key) {
         if (key.getName().equals(this.keyName)) {
             isLocked = false;
@@ -166,34 +178,64 @@ public class Room
         return false;
     }
 
+    /**
+     * Checks if the room is currently locked.
+     *
+     * @return true if the room is locked, false otherwise.
+     */
     public boolean isLocked() {
         return isLocked;
     }
 
+    
     /**
-     * This method returns the name of the key needed to unlock the room.
-     * @return The name of the key.
+     * Retrieves the name of the key required to unlock the room.
+     *
+     * @return The name of the key item needed to unlock the room.
      */
     public String getKeyName() {
         return keyName;
     }
     
+    /**
+     * Unlocks the room, allowing entry 
+     */
     public void unlock() {
         this.isLocked = false;
     }
 
+    /**
+     * Returns the damage setting of the room.
+     *
+     * @return The damage value associated with the room.
+     */
     public int getDamage() {
         return damage;
     }
     
+    /**
+     * Sets a villain in the room.
+     *
+     * @param villain The villain to be placed in the room.
+     */
         public void setVillain(Villain villain) {
         this.villain = villain;
     }
 
+    /**
+     * Retrieves the villain present in the room, if any.
+     *
+     * @return The villain in the room or null if no villain is present.
+     */
     public Villain getVillain() {
         return villain;
     }
 
+    /**
+     * Checks if there is an undefeated villain present in the room.
+     *
+     * @return true if an undefeated villain is present, false otherwise.
+     */
     public boolean hasVillain() {
         return villain != null && !villain.isDefeated();
     }
